@@ -27,7 +27,7 @@ const userInfo = `
 //   });
 // };
 export const GET_ME = gql`
-    query get_me($token: String!){
-        get_me(token: $token) ${userInfo}
+    query get_me{
+        get_me ${userInfo}
     }
 `
