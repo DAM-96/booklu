@@ -3,7 +3,7 @@ import { Form, Button, Alert } from 'react-bootstrap';
 
 //import { createUser } from '../utils/API';
 import { useMutation } from "@apollo/client";
-import { CREATE_USER } from "../utils/mutations"
+import { CREATE_USER } from "../utils/mutations";
 
 import Auth from '../utils/auth';
 
@@ -32,13 +32,9 @@ const SignupForm = () => {
     }
 
     try {
-      const {response} = await createUser({variables:{userFormData}});
-
-      if (!response.createUser.token) {
-        throw new Error('something went wrong!');
-      }
-      console.log(response.createUser.user.username);
-      Auth.login(response.createUser.token);
+      const { newUser } = await createUser({variables:{ ...userFormData }}) 
+      console.log(newUser);
+      Auth.login(newUser.createUser.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);

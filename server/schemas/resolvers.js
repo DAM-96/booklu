@@ -1,7 +1,6 @@
 const {  User } = require("../models");
 const Auth = require("../utils/auth");
 const { AuthenticationError } = require('apollo-server-express');
-const bcrypt = require('bcrypt');
 
 const resolvers = {
     Query: {

@@ -7,6 +7,7 @@ const { typeDefs, resolvers } = require("./schemas"); //PENDING TO ADD TYPEDEFS 
 const { type } = require('os');
 const app = express();
 const PORT = process.env.PORT || 3001;
+const { authMiddleware } = require("./utils/auth")
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
