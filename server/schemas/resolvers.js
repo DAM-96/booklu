@@ -1,5 +1,6 @@
 const {  User } = require("../models");
 const Auth = require("../utils/auth");
+const { AuthenticationError } = require('apollo-server-express');
 const bcrypt = require('bcrypt');
 
 const resolvers = {
@@ -14,7 +15,7 @@ const resolvers = {
             if (context.user) {
               return User.findOne({ _id: context.user._id }).populate("books");
             }
-            throw new Error("The user is not signed in");
+            throw new AuthenticationError("The user is not signed in");
           }
     },
     Mutation: {
@@ -25,14 +26,14 @@ const resolvers = {
         },
         loginUser: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
-            password = user.isCorrectPassword(password);
+            let inputPassword = user.isCorrectPassword(password);
             const token = signToken(user);
             if (!user) {
-                throw new Error("No accounts under this email");
+                throw new AuthenticationError("Invalid username password");
             }
 
             if (!password) {
-                throw new Error("Invalid password")
+                throw new AuthenticationError("Invalid username password")
             }
             return { token, user };
         },
